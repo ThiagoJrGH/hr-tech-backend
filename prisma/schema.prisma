@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique @db.NVarChar(255)
+  passwordHash String   @map("password_hash") @db.NVarChar(255)
+  role         String   @default("HR") @db.NVarChar(20)
+
+  @@map("Users")
+}
+
+model Employee {
+  id                Int      @id @default(autoincrement())
+  firstName         String   @map("first_name") @db.NVarChar(120)
+  lastName          String   @map("last_name") @db.NVarChar(120)
+  department        String   @db.NVarChar(120)
+  position          String   @db.NVarChar(120)
+  baseSalary        Decimal  @map("base_salary") @db.Decimal(18, 2)
+  hireDate          DateTime @map("hire_date") @db.Date
+  performanceRating Int      @map("performance_rating")
+
+  @@map("Employees")
+}

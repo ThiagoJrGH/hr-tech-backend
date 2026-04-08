@@ -1,0 +1,23 @@
+# Dependencias de Node.js
+node_modules
+
+# Archivo de construcción de TypeScript
+dist
+
+# Entorno (¡El más importante!)
+.env
+
+# Para cuando hagamos pruebas automáticas
+coverage
+
+# Archivos de Prisma
+.prisma
+
+# Archivos basura de Mac
+.DS_Store
+
+# Logs y errores de npm, yarn y pnpm
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*

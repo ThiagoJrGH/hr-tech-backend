@@ -15,3 +15,20 @@ Este proyecto es el "motor" (backend) de una plataforma moderna diseñada para m
 * **Base de Datos:** SQL Server gestionado a través de Prisma ORM (Consultas rápidas y seguras).
 * **Inteligencia Artificial:** SDK oficial de Google Generative AI.
 * **Arquitectura:** API RESTful escalable.
+
+### 🧠 Integración con el Frontend
+
+El backend funciona como el núcleo lógico del sistema, exponiendo una API RESTful que es consumida por el frontend desarrollado en React.
+
+* 📡 **Comunicación vía HTTP:** Intercambio de datos en formato JSON entre frontend y backend.
+* 🔐 **Autenticación Centralizada:** Uso de JWT para validar cada request proveniente del cliente.
+* 🧾 **Endpoints Especializados:** Rutas diseñadas para operaciones específicas como gestión de empleados, sueldos y generación de reportes.
+* 🧠 **Procesamiento con IA:** El backend recibe solicitudes del frontend, procesa datos empresariales y consulta a Gemini para generar insights inteligentes.
+* 🛡️ **Validación y Seguridad:** Toda la información enviada desde el frontend es validada antes de ser procesada o almacenada.
+
+### 🔄 Flujo General del Sistema
+
+```text
+Frontend (React) → API REST (Node.js + Express) → Lógica de Negocio → Base de Datos (SQL Server)
+                                               → Integración IA (Gemini 2.5)
+                                               → Respuesta JSON → Frontend

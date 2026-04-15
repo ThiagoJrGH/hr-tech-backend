@@ -22,3 +22,6 @@ export interface EmployeeOutput {
   hire_date: string;
   performance_rating: number;
 }
+
+export const updateEmployeeSchema = createEmployeeSchema.partial();
+export type UpdateEmployeeInput = z.infer<typeof updateEmployeeSchema>;

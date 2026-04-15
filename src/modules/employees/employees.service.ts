@@ -1,6 +1,8 @@
 import { Employee, PrismaClient } from "@prisma/client";
-import { CreateEmployeeInput, EmployeeOutput } from "./dto/createEmployee.schema";
+import { CreateEmployeeInput, EmployeeOutput, UpdateEmployeeInput } from "./dto/createEmployee.schema";
 import { ListEmployeesQueryInput, ListEmployeesResponse } from "./dto/listEmployeesQuery.schema";
+import { AppError } from "../../shared/errors/AppError";
+
 
 type EmployeeSortBy = "hire_date" | "base_salary" | "performance_rating" | "last_name";
 type SortOrder = "asc" | "desc";
@@ -102,5 +104,33 @@ export class EmployeesService {
       hire_date: employee.hireDate.toISOString().split("T")[0] as string,
       performance_rating: employee.performanceRating
     };
+  }
+
+  public async updateEmployee(id: number, data: any) {
+    const existing = await this.prisma.employee.findUnique({ where: { id } });
+    if (!existing) throw new AppError("Empleado no encontrado", 404);
+
+    return await this.prisma.employee.update({
+      where: { id },
+      data: {
+        // Traducimos de snake_case (Frontend) a camelCase (Prisma)
+        firstName: data.first_name,
+        lastName: data.last_name,
+        department: data.department,
+        position: data.position,
+        baseSalary: data.base_salary,
+        hireDate: data.hire_date ? new Date(data.hire_date) : undefined,
+        performanceRating: data.performance_rating,
+      },
+    });
+  }
+
+  public async deleteEmployee(id: number) {
+    const existing = await this.prisma.employee.findUnique({ where: { id } });
+    if (!existing) throw new AppError("Empleado no encontrado", 404);
+
+    return await this.prisma.employee.delete({
+      where: { id },
+    });
   }
 }

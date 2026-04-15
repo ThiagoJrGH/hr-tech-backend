@@ -28,3 +28,28 @@ model Employee {
 
   @@map("Employees")
 }
+
+// =======================================
+//  NUEVAS TABLAS DE CATÁLOGO (DINÁMICAS)
+// =======================================
+
+model Department {
+  id        Int        @id @default(autoincrement())
+  name      String     @unique @db.NVarChar(120)
+  
+  // Relación: Un departamento tiene muchos cargos
+  positions Position[]
+
+  @@map("Departments")
+}
+
+model Position {
+  id           Int        @id @default(autoincrement())
+  name         String     @db.NVarChar(120)
+  departmentId Int        @map("department_id")
+  
+  // Relación: Un cargo pertenece a un departamento
+  department   Department @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+
+  @@map("Positions")
+}

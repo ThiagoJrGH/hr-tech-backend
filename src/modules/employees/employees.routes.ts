@@ -5,7 +5,7 @@ import { requireRole } from "../../middlewares/requireRole";
 import { validateBody } from "../../middlewares/validateBody";
 import { asyncHandler } from "../../shared/utils/asyncHandler";
 import { listEmployeesQuerySchema } from "./dto/listEmployeesQuery.schema";
-import { createEmployeeSchema } from "./dto/createEmployee.schema";
+import { createEmployeeSchema, updateEmployeeSchema } from "./dto/createEmployee.schema";
 import { EmployeesService } from "./employees.service";
 import { EmployeesController } from "./employees.controller";
 
@@ -35,5 +35,22 @@ employeesRouter.post(
   validateBody(createEmployeeSchema),
   asyncHandler(employeesController.createEmployee)
 );
+
+
+employeesRouter.put(
+  "/:id",
+  authJwt,
+  requireRole(["HR", "ADMIN"]) as RequestHandler,
+  validateBody(updateEmployeeSchema),
+  asyncHandler(employeesController.updateEmployee as any)
+);
+
+employeesRouter.delete(
+  "/:id",
+  authJwt,
+  requireRole(["HR", "ADMIN"]) as RequestHandler,
+  asyncHandler(employeesController.deleteEmployee as any)
+);
+
 
 export { employeesRouter };

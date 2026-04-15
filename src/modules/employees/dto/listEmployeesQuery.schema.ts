@@ -2,8 +2,7 @@ import { z } from "zod";
 
 export const listEmployeesQuerySchema = z.object({
   page: z.coerce.number().int("page debe ser entero").min(1, "page mínimo es 1").default(1),
-  page_size: z.coerce.number().int("page_size debe ser entero").min(1, "page_size mínimo es 1").max(100, "page_size máximo es 100").default(10),
-  department: z.string().trim().min(1).max(120).optional(),
+  page_size: z.coerce.number().int("page_size debe ser entero").min(1, "page_size mínimo es 1").max(1000, "page_size máximo es 1000").default(100),  department: z.string().trim().min(1).max(120).optional(),
   position: z.string().trim().min(1).max(120).optional(),
   sort_by: z.enum(["hire_date", "base_salary", "performance_rating", "last_name"]).default("hire_date"),
   sort_order: z.enum(["asc", "desc"]).default("desc")

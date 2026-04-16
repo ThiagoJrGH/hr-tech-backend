@@ -169,7 +169,7 @@ export class AiService {
         temperature: 0.2,
         topP: 0.9,
         topK: 40,
-        maxOutputTokens: 2048,
+        maxOutputTokens: 8192,
         responseMimeType: "application/json"
       }
     });
@@ -219,6 +219,7 @@ export class AiService {
       return trimmed.slice(firstBrace, lastBrace + 1);
     }
 
+    console.error("[AI] Gemini raw response (no JSON found):", rawText.slice(0, 500));
     throw new AppError("La respuesta de Gemini no contiene JSON válido", 502);
   }
 
@@ -228,6 +229,8 @@ export class AiService {
     try {
       parsedUnknown = JSON.parse(jsonText);
     } catch (error: unknown) {
+      console.error("[AI] Failed to parse JSON. First 500 chars:", jsonText.slice(0, 500));
+      console.error("[AI] Last 200 chars:", jsonText.slice(-200));
       if (error instanceof Error) {
         throw new AppError("No se pudo parsear el JSON de Gemini", 502, { cause: error.message });
       }
